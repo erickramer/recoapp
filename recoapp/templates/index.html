@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Movie Recomendations</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="static/bower_components/skeleton/css/normalize.css">
+  <link rel="stylesheet" href="static/bower_components/skeleton/css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script src="static/bower_components/jquery/dist/jquery.js"></script>
+  <script src="static/bower_components/list.js/dist/list.js"></script>
+  <script src="static/bower_components/list.pagination.js/dist/list.pagination.js"></script>
+  <script src="static/bower_components/d3/d3.min.js"></script>
+  <script src="static/format.js"></script>
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+
+    <div class="container" style="margin-top: 25%">
+        <section class="header" style="margin-bottom: 10%">
+          <h2 class="title">Movie Recommendations. Collaborative Filtering.</h2>
+          <a class="button button-primary" href="">View the code</a>
+        </section>
+
+        <hr>
+
+        <div class="docs-section" id="input">
+           <h4>
+           Choose some movies that you love. Or hate.
+            </h4>
+            <input class="search" placeholder="Search" />
+            <br/>
+            <ul class="pagination"></ul>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Movie</th>
+                  <th>Year</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <tr>
+                  <td class="title">Movie</td>
+                  <td class="year">-1</td>
+                  <td><button>Love</button></td>
+                  <td><button>Hate</button></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <div class="docs-section" id="top">
+           <h4>
+           You may like these movies
+            </h4>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Movie</th>
+                  <th>Year</th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <tr>
+                  <td class="title">Godfather, The</td>
+                  <td class="year">1972</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <div class="docs-section" id="bottom">
+           <h4>
+           Probably stay away from these
+            </h4>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Movie</th>
+                  <th>Year</th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <tr>
+                  <td class="title">Glitter</td>
+                  <td class="year">2001</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+  </div>
+
+
+</body>
+</html>

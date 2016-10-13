@@ -1,0 +1,26 @@
+{
+  "name": "static",
+  "authors": [
+    "Eric Kramer <ericransomkramer@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^4.2.7",
+    "list.pagination.js": "^0.1.1",
+    "list.js": "^1.2.0",
+    "jquery": "^3.1.1",
+    "skeleton": "^2.0.4",
+    "socket.io": "^1.5.0"
+  }
+}
