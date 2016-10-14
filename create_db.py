@@ -2,6 +2,8 @@ from recoapp import app, db
 import recoapp.models
 import pandas as pd
 import re
+import urllib
+import zipfile
 
 def extract_year(x):
     year = re.search("[12][0-9][0-9][0-9]", x)
@@ -12,6 +14,18 @@ def extract_year(x):
 
     return x, None
 
+## Download movieles data
+
+print "Downloading MovieLens data"
+
+urlopener = urllib.URLopener()
+urlopener.retrieve('http://files.grouplens.org/datasets/movielens/ml-20m.zip', './data/ml-20m.zip')
+
+zip_ref = zipfile.ZipFile('./data/ml-20m.zip', 'r')
+zip_ref.extractall('./data/')
+zip_ref.close()
+
+## Input into database
 
 movies = pd.read_csv("./data/ml-20m/movies.csv", index_col='movieId')
 ratings = pd.read_csv("./data/ml-20m/ratings.csv")
