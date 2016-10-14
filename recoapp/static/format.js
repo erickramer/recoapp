@@ -64,7 +64,8 @@ function start_polling(data){
   }
 
   function poll(){
-    $.get('/api/recommend/' + USER_ID, function(data){
+    var data = {method: 'raw'}
+    $.get('/api/recommend/' + USER_ID, data, function(data){
       redraw_tables(data)
     })
   }
@@ -76,7 +77,7 @@ function start_polling(data){
   var top_table = new List('top', options)
   var bottom_table = new List('bottom', options)
 
-  setInterval(poll, 1000)
+  setInterval(poll, 3000)
 }
 
 $(document).ready(function(){

@@ -5,7 +5,7 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     title = db.Column(db.String(150))
     year = db.Column(db.Integer)
-    rating = db.Column(db.Numeric)
+    prob = db.Column(db.Numeric)
 
     def __init__(self, id, title, year, prob):
         self.id = int(id)
@@ -19,7 +19,10 @@ class Movie(db.Model):
         return '<Movie %r>' % self.title
 
     def to_dict(self):
-        return {'id': self.id, 'title': self.title, 'year': self.year}
+        return {'id': self.id,
+                'title': self.title,
+                'year': self.year,
+                'prob': None if self.prob is None else float(self.prob)} # stored as 'Decimal' object
 
     @classmethod
     def all_ids(cls):

@@ -3,6 +3,7 @@ import os
 import re
 import numpy as np
 import pandas as pd
+from recoapp import app
 from keras.models import Sequential
 from keras.layers import Input, Dense, Dropout, Embedding
 from keras.layers import Merge, Flatten, Input, merge
@@ -11,6 +12,8 @@ from scipy.stats import rankdata
 from recoapp.models import Movie
 
 MODEL_PATH = "./data/model.h5"
+
+print os.getcwd()
 
 class CF(object):
 
@@ -51,7 +54,7 @@ class CF(object):
 
         return True
 
-    def _predict(self, user_id):
+    def recommend(self, user_id):
         movie_ids = Movie.all_ids()
         user_ids = [user_id]*len(movie_ids)
 
@@ -59,41 +62,8 @@ class CF(object):
         x = [np.array(z) for z in x]
         y = self.model.predict(x)
 
-        return movie_ids, y
+        y = list(y[:, 0])
+        y = [float(z) for z in y]
+        y = zip(movie_ids, y)
 
-
-    def recommend(self, user_id, nb=5):
-        ids, y = self._predict(user_id)
-
-        print ids
-        print list(y)
-
-        return ids[top_ids], ids[bottom_ids]
-
-    def perso(self, user_id):
-        ids, y_hat = self._predict(user_id)
-
-        y_hat = dict(zip(ids, y_hat))
-        enrichment = []
-        for movie in db.session.query(Movie).all():
-            if movie.prob > 0 and movie.prob < 1:
-                try:
-                    e = y_hat[movie.id] / movie.prob
-                    enrichment.append(movie.id, e)
-                except KeyError:
-                    print "Problem with %s" % movie.title
-
-        top = sorted(enrichment, key=lambda x: x[1], reverse=T)
-        bottom = sorted(enrichment, key=lambda x: x[1])
-
-        top = [x[0] for x in top]
-        bottom = [x[0] for x in bottom]
-
-        return top, bottom
-
-
-if __name__ == "__main__":
-    cf = CF()
-    cf.add_rating(1,1,True)
-
-    print cf.recommend(1)
+        return y

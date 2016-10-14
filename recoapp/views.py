@@ -22,35 +22,35 @@ def movies():
 @app.route('/api/recommend/<int:user_id>')
 def recommend(user_id):
 
-    def get_movies(ids):
-        ids = list(ids)
-        q = db.session.query(Movie)
-        movies = q.filter(Movie.id.in_(ids)).all()
-        return [m.to_dict() for m in movies]
+    def raw_prob(m):
+        try:
+            return m['prob_predicted']
+        except KeyError:
+            return 0
 
-    top, bottom = cf.recommend(user_id)
-    top_movies = get_movies(top)
-    bottom_movies = get_movies(bottom)
+    def normed_prob(m):
+        try:
+            if m['prob'] > 0 and m['prob'] < 1:
+                return m['prob_predicted'] / m['prob']
+        except KeyError:
+            pass
+        return 0
 
-    d = {"top": top_movies, "bottom": bottom_movies}
-    return jsonify(d)
+    key = raw_prob if request.args['method'] == 'raw' else normed_prob
+    y = cf.recommend(user_id)
 
-@app.route('/api/perso/<int:user_id>')
-def perso(user_id):
+    movies = db.session.query(Movie).all()
+    movies = {m.id: m.to_dict() for m in movies}
+    for movie_id, prob in y:
+        try:
+            movies[movie_id]['prob_predicted'] = prob
+        except KeyError:
+            pass
 
-    def get_movies(ids):
-        ids = list(ids)
-        q = db.session.query(Movie)
-        movies = q.filter(Movie.id.in_(ids)).all()
-        return [m.to_dict() for m in movies]
+    movies = movies.values()
+    movies = sorted(movies, key=key)
+    d = {'bottom': movies[0:5], 'top': movies[::-1][0:5]}
 
-    top, bottom = cf.perso(user_id)
-    print top
-    print bottom
-    top_movies = get_movies(top)
-    bottom_movies = get_movies(bottom)
-
-    d = {"top": top_movies, "bottom": bottom_movies}
     return jsonify(d)
 
 

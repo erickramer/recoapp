@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
 db = SQLAlchemy(app)
-db.engine.raw_connection().text_factory = str 
+db.engine.raw_connection().text_factory = str
 
 import recoapp.models
 import recoapp.views
